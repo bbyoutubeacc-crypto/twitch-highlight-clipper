@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Knie-Kraft</title>
+<meta name="description" content="Tägliche Physio-Übungen bis zur Kreuzband-OP abhaken.">
+<meta name="theme-color" content="#f6f3ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101513" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Knie-Kraft">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --bg:#f6f3ec;--card:#ffffff;--card2:#efeae0;--text:#1f2a24;--muted:#66726b;--line:#e2dccf;
+  --green:#2e9e66;--green-soft:#e1f3e8;--green-ink:#1b7346;
+  --amber:#d98e1f;--amber-soft:#fbefd9;--accent:#2f6f5e;--danger:#c0443a;--danger-soft:#fbe6e3;
+  --shadow:0 1px 2px rgba(40,30,10,.06),0 6px 18px rgba(40,30,10,.06);
+  --radius:20px;--nav-h:72px;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#101513;--card:#19201d;--card2:#232c28;--text:#e8eee9;--muted:#9aa8a0;--line:#2c3732;
+  --green:#46c487;--green-soft:#173a2a;--green-ink:#86e3b3;
+  --amber:#f0b34a;--amber-soft:#3b2e15;--accent:#7cc4ae;--danger:#ff7a6e;--danger-soft:#3d1c19;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);color-scheme:dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101513;--card:#19201d;--card2:#232c28;--text:#e8eee9;--muted:#9aa8a0;--line:#2c3732;
+    --green:#46c487;--green-soft:#173a2a;--green-ink:#86e3b3;
+    --amber:#f0b34a;--amber-soft:#3b2e15;--accent:#7cc4ae;--danger:#ff7a6e;--danger-soft:#3d1c19;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);color-scheme:dark;
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text)}
+body{font:18px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  min-height:100vh;min-height:100dvh;-webkit-text-size-adjust:100%;
+  padding:env(safe-area-inset-top) 0 calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;touch-action:manipulation}
+h1,h2,h3{margin:0;line-height:1.2}
+main{max-width:640px;margin:0 auto;padding:12px 16px}
+.hidden{display:none!important}
+.muted{color:var(--muted)}
+.small{font-size:15px}
+.center{text-align:center}
+
+/* Header */
+.top{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 10px}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand-dot{width:26px;height:26px;border-radius:8px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:15px}
+.today-label{font-size:15px;color:var(--muted)}
+
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px;min-width:0}
+.card.calcard{padding:14px 10px}
+.hero{background:linear-gradient(135deg,var(--green) 0%,#2a8a7a 100%);color:#fff;position:relative;overflow:hidden}
+:root[data-theme="dark"] .hero{background:linear-gradient(135deg,#1f6b48 0%,#1d5a52 100%)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hero{background:linear-gradient(135deg,#1f6b48 0%,#1d5a52 100%)}}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero-row{display:flex;align-items:flex-end;gap:12px}
+.hero-num{font-size:64px;font-weight:800;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.hero-txt{font-size:18px;font-weight:600;padding-bottom:4px}
+.hero-sub{opacity:.9;font-size:15px;margin-top:6px}
+.bar{height:12px;border-radius:99px;background:rgba(255,255,255,.25);overflow:hidden;margin-top:14px}
+.bar>i{display:block;height:100%;background:#fff;border-radius:99px;transition:width .5s ease}
+.hero-meta{display:flex;justify-content:space-between;font-size:15px;margin-top:8px;opacity:.95}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{background:rgba(255,255,255,.18);border-radius:99px;padding:6px 12px;font-size:15px;font-weight:600}
+
+/* Session tabs */
+.daytitle{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:18px 2px 10px}
+.daytitle h2{font-size:22px}
+.tag{font-size:13px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--card2);color:var(--muted);white-space:nowrap}
+.tag.today{background:var(--green-soft);color:var(--green-ink)}
+.tag.past{background:var(--amber-soft);color:var(--amber)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.tab{background:var(--card);border-radius:18px;padding:12px 14px;text-align:left;box-shadow:var(--shadow);border:2px solid transparent;min-height:72px}
+.tab[aria-selected="true"]{border-color:var(--green)}
+.tab .t1{font-weight:700;font-size:18px;display:flex;align-items:center;gap:6px}
+.tab .t2{font-size:14px;color:var(--muted);margin-top:2px}
+.tab.done .t2{color:var(--green-ink);font-weight:700}
+.minibar{height:6px;border-radius:99px;background:var(--card2);margin-top:8px;overflow:hidden}
+.minibar>i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .4s}
+
+.banner{border-radius:16px;padding:12px 14px;margin-bottom:12px;font-size:16px;display:flex;gap:10px;align-items:flex-start}
+.banner.ok{background:var(--green-soft);color:var(--green-ink);font-weight:600}
+.banner.info{background:var(--card2)}
+.banner.warn{background:var(--amber-soft)}
+.banner button{margin-left:auto;font-weight:700;color:var(--accent);padding:0 4px;font-size:20px;line-height:1}
+
+/* Exercises */
+.ex{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:12px;border:2px solid transparent;transition:border-color .25s,background .25s}
+.ex.done{border-color:var(--green);background:linear-gradient(0deg,var(--green-soft),var(--green-soft)) padding-box}
+.ex-head{display:flex;gap:12px;align-items:flex-start}
+.ex-emo{font-size:30px;width:48px;height:48px;border-radius:14px;background:var(--card2);display:grid;place-items:center;flex:none;position:relative}
+.ex.done .ex-emo{background:var(--card)}
+.side{position:absolute;bottom:-4px;right:-4px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;border-radius:7px;padding:1px 5px}
+.ex h3{font-size:18px;font-weight:700}
+.ex p{margin:3px 0 0;font-size:15px;color:var(--muted)}
+.ex-check{margin-left:auto;flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:17px;color:transparent;font-weight:900}
+.ex.done .ex-check{background:var(--green);border-color:var(--green);color:#fff}
+.ctl{display:flex;align-items:center;gap:10px;margin-top:14px}
+.count{flex:1;text-align:center;font-variant-numeric:tabular-nums}
+.count b{font-size:34px;font-weight:800;letter-spacing:-.02em}
+.count span{font-size:18px;color:var(--muted);font-weight:600}
+.segs{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:12px}
+.segs i{height:7px;border-radius:99px;background:var(--card2)}
+.segs i.on{background:var(--green)}
+.btn{min-height:56px;border-radius:16px;padding:0 18px;font-weight:700;font-size:18px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .08s,background .2s}
+.btn:active{transform:scale(.96)}
+.btn:disabled{opacity:.4;pointer-events:none}
+.btn-pri{background:var(--green);color:#fff;min-width:96px;font-size:22px}
+.btn-sec{background:var(--card2);color:var(--text)}
+.btn-ghost{background:transparent;color:var(--muted);border:2px solid var(--line);min-width:56px;padding:0 12px;font-size:22px}
+.btn-wide{width:100%;margin-top:10px}
+.btn-check{width:100%;margin-top:14px;background:var(--card2);color:var(--text);font-size:18px}
+.ex.done .btn-check{background:var(--green);color:#fff}
+.btn-timer{width:100%;margin-top:10px;background:var(--accent);color:#fff}
+.linkbtn{color:var(--accent);font-weight:700;font-size:16px;padding:12px 4px;text-decoration:underline;text-underline-offset:3px}
+.btn-danger{background:var(--danger-soft);color:var(--danger)}
+.pop{animation:pop .3s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+
+/* Calendar */
+.cal-head,.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal-head div{text-align:center;font-size:13px;color:var(--muted);font-weight:700;padding-bottom:4px}
+.cal button,.cal .blank{min-width:0;aspect-ratio:.72;border-radius:12px;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 0 7px;border:2px solid transparent}
+.cal .blank{background:transparent;box-shadow:none}
+.cal .d{font-weight:800;font-size:17px;line-height:1}
+.cal .m{font-size:11px;color:var(--muted);font-weight:600;line-height:1}
+.cal .future{opacity:.55}
+.cal .is-today{border-color:var(--green)}
+.cal .op{background:var(--danger-soft);color:var(--danger);box-shadow:none}
+.cal .op .d{color:var(--danger)}
+.pips{display:flex;gap:3px}
+.pip{width:12px;height:12px;flex:none;border-radius:50%;border:2px solid var(--line);background:transparent}
+.pip.done{background:var(--green);border-color:var(--green)}
+.pip.partial{background:linear-gradient(90deg,var(--amber) 50%,transparent 50%);border-color:var(--amber)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:14px}
+.legend span{display:flex;align-items:center;gap:6px}
+.daylist{margin-top:6px}
+.dayrow{display:flex;align-items:center;gap:12px;width:100%;padding:12px 4px;border-bottom:1px solid var(--line);text-align:left}
+.dayrow:last-child{border-bottom:0}
+.dayrow .dn{width:44px;font-weight:800;color:var(--muted);font-size:14px}
+.dayrow .dt{flex:1}
+.dayrow .st{font-size:14px;color:var(--muted);display:flex;gap:10px}
+
+/* Stats & badges */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:14px}
+.stat .v{font-size:28px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .l{font-size:14px;color:var(--muted);line-height:1.3}
+.stat .e{font-size:22px}
+.stat.wide{grid-column:1/-1}
+.badges{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.badge{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:14px;text-align:center}
+.badge .bi{font-size:38px;line-height:1.1;margin-bottom:6px}
+.badge .bt{font-weight:800;font-size:16px}
+.badge .bd{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.3}
+.badge .bdate{font-size:12px;color:var(--green-ink);font-weight:700;margin-top:6px}
+.badge.locked .bi{filter:grayscale(1);opacity:.35}
+.badge.locked .bt{color:var(--muted)}
+.section-title{font-size:20px;font-weight:800;margin:22px 2px 10px}
+
+/* Settings */
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);min-height:56px}
+.row:last-child{border-bottom:0}
+.row label{flex:1}
+.row .hint{display:block;font-size:14px;color:var(--muted)}
+.switch{position:relative;width:56px;height:34px;flex:none}
+.switch input{opacity:0;width:100%;height:100%;margin:0;position:absolute;z-index:1;cursor:pointer}
+.switch i{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:background .2s}
+.switch i::after{content:"";position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.switch input:checked+i{background:var(--green)}
+.switch input:checked+i::after{transform:translateX(22px)}
+select,input[type=time]{background:var(--card2);border:0;border-radius:12px;padding:10px 12px;min-height:46px}
+.prose{font-size:16px}
+.prose p{margin:0 0 10px}
+.prose ol,.prose ul{margin:0 0 10px;padding-left:22px}
+.prose li{margin-bottom:4px}
+
+/* Bottom nav */
+nav.bottom{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);z-index:20}
+nav.bottom button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border-radius:14px;color:var(--muted);font-size:13px;font-weight:700;min-height:58px}
+nav.bottom button .ni{font-size:24px;line-height:1.1;filter:grayscale(.6);opacity:.8}
+nav.bottom button[aria-current="page"]{color:var(--green-ink);background:var(--green-soft)}
+nav.bottom button[aria-current="page"] .ni{filter:none;opacity:1}
+
+/* Overlays */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(10,20,15,.5);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom));animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.sheet{background:var(--card);border-radius:26px;max-width:520px;width:100%;padding:24px 20px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:up .28s cubic-bezier(.2,.9,.3,1.2);max-height:88vh;overflow:auto}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet h2{font-size:24px;margin-bottom:8px}
+.sheet .big-emo{font-size:56px;text-align:center;line-height:1.1}
+.quote{font-size:20px;line-height:1.4;font-weight:600;margin:12px 0 4px;text-align:center}
+.sheet .btns{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.newbadge{display:flex;gap:12px;align-items:center;background:var(--green-soft);border-radius:16px;padding:10px 12px;margin-top:10px}
+.newbadge .bi{font-size:32px}
+
+/* Timer */
+.timer{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:calc(20px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));transition:background .3s}
+.timer.hold{background:var(--green-soft)}
+.timer.rest{background:var(--card2)}
+.timer.flash{animation:flash .5s}
+@keyframes flash{0%,100%{filter:none}30%{filter:brightness(1.4) saturate(1.4)}}
+.timer .tt{font-size:20px;font-weight:700;text-align:center}
+.timer .tr{font-size:17px;color:var(--muted);text-align:center;margin-top:4px}
+.ring{position:relative;width:min(78vw,340px);aspect-ratio:1}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:14}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:var(--green);stroke-linecap:round;transition:stroke-dashoffset .12s linear,stroke .3s}
+.timer.rest .ring .fg{stroke:var(--amber)}
+.ring .inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .num{font-size:min(30vw,130px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.ring .ph{font-size:22px;font-weight:700;margin-top:6px}
+.timer .segs{width:min(86vw,360px)}
+.timer .tb{display:flex;gap:12px;width:100%;max-width:420px}
+.timer .tb .btn{flex:1;min-height:64px}
+
+/* Toast */
+.toast{pointer-events:none;position:fixed;left:50%;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 18px);transform:translateX(-50%);background:var(--text);color:var(--bg);
+  padding:12px 18px;border-radius:14px;font-size:16px;font-weight:600;z-index:70;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.25);animation:up .25s}
+canvas#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:80}
+
+/* Finale */
+.finale{text-align:center;padding:26px 18px}
+.finale .fe{font-size:72px;line-height:1}
+.finale h1{font-size:30px;margin:12px 0 8px;letter-spacing:-.02em}
+.finale p{font-size:18px;margin:0 0 8px}
+.wish{background:var(--green-soft);color:var(--green-ink);border-radius:18px;padding:16px;font-weight:600;font-size:18px;margin-top:14px;text-align:left}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:520px){.badges{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+
+<nav class="bottom" aria-label="Hauptnavigation">
+  <button data-nav="heute"><span class="ni">🏠</span>Heute</button>
+  <button data-nav="kalender"><span class="ni">📅</span>Kalender</button>
+  <button data-nav="erfolge"><span class="ni">🏅</span>Erfolge</button>
+  <button data-nav="einstellungen"><span class="ni">⚙️</span>Einstellungen</button>
+</nav>
+
+<div id="layer"></div>
+<canvas id="confetti" class="hidden"></canvas>
+
+<noscript><p style="padding:20px">Bitte JavaScript aktivieren, damit die App funktioniert.</p></noscript>
+
+<script>
+"use strict";
+/* ===================== Konfiguration ===================== */
+const APP_VERSION = "1.0.0";
+const START = "2026-11-18";   // erster Trainingstag
+const END   = "2026-12-03";   // letzter Trainingstag (inklusive)
+const OP    = "2026-12-04";   // OP-Tag
+const TZ    = "Europe/Zurich";
+const STORE_KEY = "kniekraft.v1";
+const HOLD_SECONDS = 10;
+
+const EXERCISES = [
+  { emoji:"🦵", side:"L", title:"Oberschenkel anspannen – links", desc:"Linken Oberschenkelmuskel 10 Sekunden fest anspannen, dann entspannen.", target:10, timer:true, kind:"tension" },
+  { emoji:"🦵", side:"R", title:"Oberschenkel anspannen – rechts", desc:"Rechten Oberschenkelmuskel 10 Sekunden fest anspannen, dann entspannen.", target:10, timer:true, kind:"tension" },
+  { emoji:"🦶", title:"Zehenspitzen", desc:"Auf die Zehenspitzen hochdrücken und langsam wieder runter.", target:10, kind:"toes" },
+  { emoji:"🪜", title:"Treppe", desc:"4 Stufen hoch und 4 Stufen wieder runter gehen.", target:1, kind:"stairs" },
+  { emoji:"🚶", title:"Spaziergang", desc:"Einmal ums Haus gehen.", target:1, kind:"walk" },
+  { emoji:"🛏️", title:"Knie beugen im Liegen", desc:"Knie so weit wie möglich anwinkeln und wieder ganz strecken.", target:10, kind:"bend" },
+  { emoji:"🪑", title:"Knie beugen im Sitzen", desc:"An der Bettkante oder auf einem Stuhl: Bein so weit wie möglich anziehen und wieder strecken.", target:10, kind:"bend" },
+];
+const SESSIONS = { m:{ label:"Morgen", icon:"☀️" }, a:{ label:"Abend", icon:"🌙" } };
+const NUM_DAYS = 16, TOTAL_SESSIONS = 32;
+
+const QUOTES = [
+  "Dein Knie hat soeben offiziell beschlossen, dich zu mögen.",
+  "Starke Oberschenkel, starkes Knie – du legst gerade das Fundament für die Zeit nach der OP.",
+  "Einheit erledigt. Dein Quadrizeps lässt herzlich grüssen.",
+  "Klein, unspektakulär, wirksam: Genau so sieht gutes Training aus.",
+  "Jede Wiederholung ist eine Einzahlung aufs Reha-Konto. Die Zinsen gibt's nach der OP.",
+  "Kreuzband 0 – du 1.",
+  "Die beste OP-Vorbereitung ist die, die man tatsächlich macht. Check.",
+  "Deine Physio wäre stolz. Vielleicht sogar ein bisschen neidisch.",
+  "Zehn Sekunden anspannen klingt nach wenig. Bis man's macht. Respekt.",
+  "Wer vor der OP trainiert, kommt danach schneller wieder auf die Beine. Wörtlich.",
+  "Das war keine Übung. Das war Charakterbildung.",
+  "Treppe bezwungen. Der Mount Everest kann warten.",
+  "Ein Schritt nach dem anderen – heute waren es ein paar mehr.",
+  "Dein Knie ist vielleicht angeschlagen, deine Disziplin ganz offensichtlich nicht.",
+  "Muskeln haben ein gutes Gedächtnis. Du gibst ihnen gerade viel zum Merken.",
+  "Einmal ums Haus. Die Nachbarn sind beeindruckt (vermutlich).",
+  "Durchhalten ist keine Superkraft. Sieht aber verdächtig danach aus.",
+  "Heute investiert, morgen profitiert.",
+  "Konsequenz schlägt Motivation. Und du hast gerade beides bewiesen.",
+  "Dein Oberschenkel hat sich den Feierabend verdient. Fürs Erste.",
+  "Prehab statt Pech gehabt.",
+  "Wenn Knie applaudieren könnten, wär's jetzt laut hier.",
+  "Das OP-Team wird sich über diese Muskeln freuen.",
+  "Langsam ist auch eine Geschwindigkeit. Und sie kommt an.",
+  "Noch ein Kreuzchen im Kalender – ganz ohne Kreuzband.",
+  "Beugen, strecken, durchziehen. Läuft.",
+  "Sofa 0 – du 1.",
+  "Zehenspitzen-Profi. Eine Ballettkarriere ist nicht mehr ausgeschlossen.",
+  "Dein Ich nach der OP sagt: Merci vielmal!",
+  "Kraft ist das, was bleibt, wenn die Ausreden ausgehen.",
+  "Du trainierst nicht für heute. Du trainierst für den ersten Schritt nach der OP.",
+  "Das Knie wackelt vielleicht. Der Wille nicht.",
+  "Einheit abgehakt. Gönn dir ein Glas Wasser und eine Portion Stolz.",
+  "Mini-Workout, Maxi-Wirkung.",
+  "Wer regelmässig übt, muss nicht auf Wunder hoffen.",
+  "Heute ein bisschen stärker als gestern. Das reicht völlig.",
+  "Wenn Disziplin ein Muskel ist, hast du ihn gerade trainiert.",
+  "Pause verdient. Und zwar zu Recht.",
+  "Wieder ein Stück näher am Ziel – und das Ziel heisst: zurück auf beide Beine.",
+  "Strecken, beugen, lächeln. Zwei von drei reichen auch.",
+  "Das Bett war bequem. Du hast trotzdem trainiert. Legende.",
+  "Gut gemacht. Dein Knie merkt sich das – versprochen.",
+];
+
+const BADGES = [
+  { id:"first",     icon:"🌱", title:"Erster Schritt",       desc:"Die erste Einheit erledigt." },
+  { id:"fullday",   icon:"🌗", title:"Ganzer Tag",           desc:"Zum ersten Mal Morgen und Abend an einem Tag." },
+  { id:"streak3",   icon:"🔥", title:"Drei in Folge",        desc:"3 volle Tage hintereinander." },
+  { id:"morning5",  icon:"🌅", title:"Frühaufsteher",        desc:"5 Morgen-Einheiten erledigt." },
+  { id:"evening5",  icon:"🦉", title:"Nachteule",            desc:"5 Abend-Einheiten erledigt." },
+  { id:"streak7",   icon:"⚡", title:"Wochenheld",           desc:"7 volle Tage hintereinander." },
+  { id:"tension1k", icon:"🏋️", title:"Eiserner Oberschenkel", desc:"1’000 Sekunden Muskel angespannt." },
+  { id:"half",      icon:"⛰️", title:"Halbzeit",             desc:"16 von 32 Einheiten geschafft." },
+  { id:"reps1k",    icon:"🎯", title:"Tausendsassa",         desc:"1’000 Wiederholungen gesammelt." },
+  { id:"sprint",    icon:"🚀", title:"Endspurt",             desc:"24 von 32 Einheiten geschafft." },
+  { id:"all",       icon:"🏆", title:"Bereit für die OP",    desc:"Alle 32 Einheiten – 100 % geschafft!" },
+];
+
+/* ===================== Datum & Zeitzone ===================== */
+let _fmt = null;
+function zurichNow(d = new Date()) {
+  try {
+    if (!_fmt) _fmt = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", hourCycle:"h23" });
+    const p = {}; _fmt.formatToParts(d).forEach(x => p[x.type] = x.value);
+    return { key: `${p.year}-${p.month}-${p.day}`, hour: +p.hour % 24, minute: +p.minute };
+  } catch (e) { // Fallback: Gerätezeit
+    const pad = n => String(n).padStart(2, "0");
+    return { key: `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`, hour: d.getHours(), minute: d.getMinutes() };
+  }
+}
+const DEBUG_DATE = (() => { try { const v = new URLSearchParams(location.search).get("heute"); return /^\d{4}-\d{2}-\d{2}$/.test(v || "") ? v : null; } catch (e) { return null; } })();
+function todayKey() { return DEBUG_DATE || zurichNow().key; }
+function keyToUTC(k) { const [y, m, d] = k.split("-").map(Number); return Date.UTC(y, m - 1, d); }
+function diffDays(a, b) { return Math.round((keyToUTC(b) - keyToUTC(a)) / 86400000); }
+function addDays(k, n) { return new Date(keyToUTC(k) + n * 86400000).toISOString().slice(0, 10); }
+function dayIndex(k) { return diffDays(START, k); }              // 0..15 im Zeitraum
+function inRange(k) { const i = dayIndex(k); return i >= 0 && i < NUM_DAYS; }
+const DAY_KEYS = Array.from({ length: NUM_DAYS }, (_, i) => addDays(START, i));
+function fmtDate(k, opts) { return new Intl.DateTimeFormat("de-CH", Object.assign({ timeZone: "UTC" }, opts)).format(new Date(keyToUTC(k))); }
+const fmtLong  = k => fmtDate(k, { weekday:"long", day:"numeric", month:"long" });
+const fmtShort = k => fmtDate(k, { weekday:"short", day:"numeric", month:"short" });
+const nf = n => Number(n).toLocaleString("de-CH");
+
+/* ===================== Speicher ===================== */
+function defaults() {
+  return { v:1, days:{}, badges:{}, bag:[], hintDismissed:false,
+    settings:{ sound:true, vibrate:true, auto:true, pause:5, theme:"auto", remM:"08:00", remA:"19:00" } };
+}
+let storageOK = true;
+function load() {
+  const base = defaults();
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return base;
+    return sanitize(JSON.parse(raw));
+  } catch (e) { storageOK = false; return base; }
+}
+function sanitize(d) {
+  const base = defaults();
+  if (!d || typeof d !== "object") return base;
+  const out = Object.assign(base, { badges: d.badges && typeof d.badges === "object" ? d.badges : {},
+    bag: Array.isArray(d.bag) ? d.bag.filter(n => Number.isInteger(n) && n >= 0 && n < QUOTES.length) : [],
+    hintDismissed: !!d.hintDismissed });
+  out.settings = Object.assign(base.settings, d.settings || {});
+  if (d.days && typeof d.days === "object") {
+    for (const k of DAY_KEYS) {
+      const day = d.days[k]; if (!day) continue;
+      out.days[k] = {};
+      for (const s of ["m", "a"]) {
+        out.days[k][s] = EXERCISES.map((ex, i) => {
+          const v = Array.isArray(day[s]) ? Number(day[s][i]) || 0 : 0;
+          return Math.max(0, Math.min(ex.target, Math.floor(v)));
+        });
+      }
+    }
+  }
+  return out;
+}
+let S = load();
+function save() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); storageOK = true; }
+  catch (e) { storageOK = false; toast("⚠️ Speichern nicht möglich – ist privates Surfen aktiv?"); }
+}
+function getSess(k, s) {
+  if (!S.days[k]) S.days[k] = { m: EXERCISES.map(() => 0), a: EXERCISES.map(() => 0) };
+  return S.days[k][s];
+}
+function peekSess(k, s) { return (S.days[k] && S.days[k][s]) || EXERCISES.map(() => 0); }
+
+/* ===================== Auswertung ===================== */
+const exDone = (arr, i) => arr[i] >= EXERCISES[i].target;
+function sessDoneCount(k, s) { const a = peekSess(k, s); return EXERCISES.reduce((n, _, i) => n + (exDone(a, i) ? 1 : 0), 0); }
+function sessComplete(k, s) { return sessDoneCount(k, s) === EXERCISES.length; }
+function sessStatus(k, s) { const a = peekSess(k, s); if (sessComplete(k, s)) return "done"; return a.some(v => v > 0) ? "partial" : "open"; }
+function dayComplete(k) { return sessComplete(k, "m") && sessComplete(k, "a"); }
+
+function computeStats() {
+  const st = { sessions:0, m:0, a:0, fullDays:0, tensionSec:0, stairs:0, toes:0, bends:0, walks:0, reps:0, best:0, current:0 };
+  let run = 0;
+  const today = todayKey();
+  for (const k of DAY_KEYS) {
+    for (const s of ["m", "a"]) {
+      const a = peekSess(k, s);
+      if (sessComplete(k, s)) { st.sessions++; st[s]++; }
+      EXERCISES.forEach((ex, i) => {
+        const v = a[i];
+        if (ex.kind === "tension") st.tensionSec += v * HOLD_SECONDS;
+        if (ex.kind === "toes") st.toes += v;
+        if (ex.kind === "bend") st.bends += v;
+        if (ex.kind === "stairs") st.stairs += v * 8;
+        if (ex.kind === "walk") st.walks += v;
+        if (ex.target > 1) st.reps += v;
+      });
+    }
+    if (dayComplete(k)) { st.fullDays++; run++; st.best = Math.max(st.best, run); } else run = 0;
+  }
+  // aktuelle Serie: endet heute (falls heute komplett) oder gestern
+  let k = diffDays(today, END) < 0 ? END : today;
+  if (!dayComplete(k)) k = addDays(k, -1);
+  while (inRange(k) && dayComplete(k)) { st.current++; k = addDays(k, -1); }
+  return st;
+}
+function badgeEarned(id, st) {
+  switch (id) {
+    case "first": return st.sessions >= 1;
+    case "fullday": return st.fullDays >= 1;
+    case "streak3": return st.best >= 3;
+    case "streak7": return st.best >= 7;
+    case "morning5": return st.m >= 5;
+    case "evening5": return st.a >= 5;
+    case "tension1k": return st.tensionSec >= 1000;
+    case "half": return st.sessions >= 16;
+    case "reps1k": return st.reps >= 1000;
+    case "sprint": return st.sessions >= 24;
+    case "all": return st.sessions >= TOTAL_SESSIONS;
+  }
+  return false;
+}
+function checkBadges() {
+  const st = computeStats(), fresh = [];
+  for (const b of BADGES) if (!S.badges[b.id] && badgeEarned(b.id, st)) { S.badges[b.id] = todayKey(); fresh.push(b); }
+  return fresh;
+}
+function nextQuote() {
+  if (!S.bag.length) {
+    S.bag = QUOTES.map((_, i) => i);
+    for (let i = S.bag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [S.bag[i], S.bag[j]] = [S.bag[j], S.bag[i]]; }
+  }
+  return QUOTES[S.bag.pop()];
+}
+
+/* ===================== Ton, Vibration, Wake-Lock ===================== */
+let AC = null;
+function audio() {
+  try {
+    if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (C) AC = new C(); }
+    if (AC && AC.state === "suspended") AC.resume();
+  } catch (e) {}
+  return AC;
+}
+function tone(freq, dur, delay = 0, vol = 0.22) {
+  if (!S.settings.sound) return;
+  const ac = audio(); if (!ac) return;
+  try {
+    const t = ac.currentTime + delay, o = ac.createOscillator(), g = ac.createGain();
+    o.type = "sine"; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(ac.destination); o.start(t); o.stop(t + dur + 0.05);
+  } catch (e) {}
+}
+const sndStart = () => tone(660, 0.18);
+const sndEnd   = () => { tone(880, 0.16); tone(1175, 0.3, 0.17); };
+const sndDone  = () => { tone(660, 0.14); tone(880, 0.14, 0.15); tone(1320, 0.4, 0.3); };
+function buzz(p) { if (S.settings.vibrate && navigator.vibrate) { try { navigator.vibrate(p); } catch (e) {} } }
+let wakeLock = null;
+async function keepAwake(on) {
+  try {
+    if (on && "wakeLock" in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => wakeLock = null); }
+    if (!on && wakeLock) { await wakeLock.release(); wakeLock = null; }
+  } catch (e) { wakeLock = null; }
+}
+
+/* ===================== UI-Zustand ===================== */
+const $app = document.getElementById("app"), $layer = document.getElementById("layer");
+let view = "heute";
+let selDate = null;          // null = heute folgen; sonst ausgewählter Tag
+let selSess = null;          // "m" | "a"
+let lastToday = todayKey();
+let popIdx = -1;
+let installEvt = null;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+
+function defaultSess(k) {
+  if (k === todayKey()) {
+    const h = DEBUG_DATE ? 8 : zurichNow().hour;
+    if (h >= 14) return "a";
+    return "m";
+  }
+  if (!sessComplete(k, "m")) return "m";
+  if (!sessComplete(k, "a")) return "a";
+  return "m";
+}
+
+function applyTheme() {
+  const t = S.settings.theme;
+  if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+  else document.documentElement.removeAttribute("data-theme");
+  const dark = t === "dark" || (t === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.setAttribute("content", dark ? "#101513" : "#f6f3ec"));
+}
+
+/* ===================== Rendering ===================== */
+function render() {
+  document.querySelectorAll("nav.bottom button").forEach(b => { if (b.dataset.nav === view) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+  let html = "";
+  if (view === "heute") html = renderHeute();
+  else if (view === "kalender") html = renderKalender();
+  else if (view === "erfolge") html = renderErfolge();
+  else html = renderSettings();
+  $app.innerHTML = html;
+  if (popIdx >= 0) { const el = $app.querySelector(`[data-i="${popIdx}"] .count b`); if (el) el.classList.add("pop"); popIdx = -1; }
+}
+
+function heroCard() {
+  const t = todayKey(), st = computeStats();
+  const toOp = diffDays(t, OP), toStart = diffDays(t, START);
+  let num, txt, sub;
+  if (toStart > 0) { num = toOp; txt = toOp === 1 ? "Tag bis zur OP" : "Tage bis zur OP"; sub = `Das Programm startet ${toStart === 1 ? "morgen" : "in " + toStart + " Tagen"} (${fmtShort(START)}).`; }
+  else if (toOp > 1) { num = toOp; txt = "Tage bis zur OP"; sub = `Tag ${dayIndex(t) + 1} von ${NUM_DAYS} · OP am ${fmtDate(OP, { day:"numeric", month:"long" })}`; }
+  else if (toOp === 1) { num = "1"; txt = "Tag – morgen ist OP-Tag!"; sub = "Letzter Trainingstag. Zieh's durch! 💪"; }
+  else { num = "🏁"; txt = "OP-Tag erreicht"; sub = ""; }
+  const pct = Math.round(st.sessions / TOTAL_SESSIONS * 100);
+  return `<section class="card hero" aria-label="Countdown und Fortschritt">
+    <div class="hero-row"><div class="hero-num">${num}</div><div class="hero-txt">${txt}</div></div>
+    ${sub ? `<div class="hero-sub">${sub}</div>` : ""}
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="32" aria-valuenow="${st.sessions}" aria-label="Gesamtfortschritt"><i style="width:${pct}%"></i></div>
+    <div class="hero-meta"><span><b>${st.sessions}</b> von ${TOTAL_SESSIONS} Einheiten</span><span>${pct} %</span></div>
+    <div class="chips"><span class="chip">🔥 ${st.current} ${st.current === 1 ? "Tag" : "Tage"} in Folge</span><span class="chip">🏅 ${Object.keys(S.badges).length}/${BADGES.length} Abzeichen</span></div>
+  </section>`;
+}
+
+function installHint() {
+  if (S.hintDismissed || isStandalone()) return "";
+  return `<div class="banner info"><span>📲</span><span class="small"><b>Tipp:</b> Leg die App auf deinen Home-Bildschirm – dann funktioniert sie offline und dein Fortschritt ist sicher gespeichert. <a href="#" data-act="howinstall" class="linkbtn" style="padding:0">So geht's</a></span><button data-act="dismisshint" aria-label="Hinweis schliessen">×</button></div>`;
+}
+
+function renderHeute() {
+  const t = todayKey();
+  if (selDate) return renderDayEditor(selDate, true);
+  if (diffDays(t, OP) <= 0) return renderFinale();
+  let out = `<div class="top"><div class="brand"><span class="brand-dot">✓</span>Knie-Kraft</div><div class="today-label">${fmtDate(t, { weekday:"short", day:"numeric", month:"short" })}</div></div>`;
+  out += heroCard();
+  out += installHint();
+  if (!storageOK) out += `<div class="banner warn">⚠️ Dein Browser erlaubt kein Speichern (privater Modus?). Fortschritt geht beim Schliessen verloren.</div>`;
+  if (diffDays(t, START) > 0) {
+    out += `<div class="card center"><div style="font-size:44px">🗓️</div><h2 style="margin:6px 0">Bald geht's los</h2><p class="muted">Am ${fmtLong(START)} startet dein Programm: jeden Tag morgens und abends 7 Übungen. Schau dir die Übungen schon mal an:</p></div>`;
+    out += EXERCISES.map((ex, i) => exCard(START, "m", i, true)).join("");
+    return out;
+  }
+  out += renderDayEditor(t, false);
+  return out;
+}
+
+function renderDayEditor(k, standalone) {
+  const t = todayKey();
+  const isToday = k === t;
+  if (!selSess) selSess = defaultSess(k);
+  const s = selSess;
+  let out = "";
+  if (standalone) {
+    out += `<div class="top"><button class="linkbtn" data-act="back" style="text-decoration:none">← ${diffDays(t, OP) <= 0 ? "Zurück" : "Zurück zu heute"}</button><div class="today-label">Tag ${dayIndex(k) + 1}/${NUM_DAYS}</div></div>`;
+  }
+  out += `<div class="daytitle"><h2>${isToday ? "Heute" : esc(fmtLong(k))}</h2>${isToday ? `<span class="tag today">Tag ${dayIndex(k) + 1} von ${NUM_DAYS}</span>` : `<span class="tag past">nachtragen</span>`}</div>`;
+  if (!isToday) out += `<p class="muted small" style="margin:-4px 2px 12px">Vergessen zu tippen? Kein Problem – hier kannst du ${esc(fmtShort(k))} nachträglich abhaken.</p>`;
+  out += `<div class="tabs" role="tablist">` + ["m", "a"].map(x => {
+    const n = sessDoneCount(k, x), done = n === EXERCISES.length;
+    return `<button class="tab ${done ? "done" : ""}" role="tab" aria-selected="${x === s}" data-act="sess" data-s="${x}">
+      <div class="t1">${SESSIONS[x].icon} ${SESSIONS[x].label}</div>
+      <div class="t2">${done ? "✓ erledigt" : `${n} von ${EXERCISES.length} Übungen`}</div>
+      <div class="minibar"><i style="width:${n / EXERCISES.length * 100}%"></i></div></button>`;
+  }).join("") + `</div>`;
+  if (sessComplete(k, s)) out += `<div class="banner ok">✅ ${SESSIONS[s].label}-Einheit erledigt.${dayComplete(k) ? " Tag komplett! 🌟" : ""}</div>`;
+  out += EXERCISES.map((ex, i) => exCard(k, s, i, false)).join("");
+  if (!sessComplete(k, s)) out += `<div class="center"><button class="linkbtn" data-act="markall">Ganze ${SESSIONS[s].label}-Einheit als erledigt markieren</button></div>`;
+  return out;
+}
+
+function exCard(k, s, i, preview) {
+  const ex = EXERCISES[i], v = preview ? 0 : peekSess(k, s)[i], done = v >= ex.target;
+  const reps = ex.target > 1;
+  let ctl = "";
+  if (!preview) {
+    if (reps) {
+      ctl = `<div class="ctl">
+        <button class="btn btn-ghost" data-act="dec" aria-label="Eine Wiederholung zurück" ${v === 0 ? "disabled" : ""}>↶</button>
+        <div class="count" aria-live="polite"><b>${v}</b><span>/${ex.target}</span></div>
+        <button class="btn btn-pri" data-act="inc" aria-label="Eine Wiederholung dazu" ${done ? "disabled" : ""}>+1</button>
+      </div>
+      <div class="segs" aria-hidden="true">${Array.from({ length: ex.target }, (_, j) => `<i class="${j < v ? "on" : ""}"></i>`).join("")}</div>
+      ${ex.timer && !done ? `<button class="btn btn-timer" data-act="timer">⏱️ ${HOLD_SECONDS}-Sekunden-Timer starten</button>` : ""}`;
+    } else {
+      ctl = `<button class="btn btn-check" data-act="toggle" aria-pressed="${done}">${done ? "✓ Erledigt" : "Abhaken"}</button>`;
+    }
+  }
+  return `<article class="ex ${done ? "done" : ""}" data-i="${i}">
+    <div class="ex-head"><div class="ex-emo" aria-hidden="true">${ex.emoji}${ex.side ? `<span class="side">${ex.side}</span>` : ""}</div>
+      <div><h3>${esc(ex.title)}</h3><p>${esc(ex.desc)}${reps ? ` <b>${ex.target}×</b>` : ""}</p></div>
+      <div class="ex-check" aria-label="${done ? "erledigt" : "offen"}">✓</div></div>
+    ${ctl}</article>`;
+}
+
+function renderKalender() {
+  const t = todayKey();
+  const first = addDays(START, -((new Date(keyToUTC(START)).getUTCDay() + 6) % 7)); // Montag davor
+  const lastCell = addDays(OP, 6 - ((new Date(keyToUTC(OP)).getUTCDay() + 6) % 7));
+  let cells = "";
+  for (let k = first; diffDays(k, lastCell) >= 0; k = addDays(k, 1)) {
+    const d = fmtDate(k, { day:"numeric" }), mon = (k === START || k.endsWith("-01")) ? fmtDate(k, { month:"short" }) : "&nbsp;";
+    if (k === OP) { cells += `<button class="op" data-act="opday" aria-label="OP-Tag ${esc(fmtLong(k))}"><span class="m">OP</span><span class="d">${d}</span><span style="font-size:16px">🏥</span></button>`; continue; }
+    if (!inRange(k)) { cells += `<div class="blank" aria-hidden="true"></div>`; continue; }
+    const fut = diffDays(t, k) > 0;
+    const pm = sessStatus(k, "m"), pa = sessStatus(k, "a");
+    const lbl = { done:"erledigt", partial:"teilweise", open:"offen" };
+    cells += `<button class="${fut ? "future" : ""} ${k === t ? "is-today" : ""}" data-act="day" data-k="${k}" aria-label="${esc(fmtLong(k))}: Morgen ${lbl[pm]}, Abend ${lbl[pa]}">
+      <span class="m">${mon}</span><span class="d">${d}</span>
+      <span class="pips"><i class="pip ${pm}"></i><i class="pip ${pa}"></i></span></button>`;
+  }
+  const rows = DAY_KEYS.map(k => {
+    const fut = diffDays(t, k) > 0;
+    const sym = st => st === "done" ? "✅" : st === "partial" ? "🟡" : "⚪";
+    return `<button class="dayrow" data-act="day" data-k="${k}" ${fut ? 'style="opacity:.55"' : ""}>
+      <span class="dn">Tag ${dayIndex(k) + 1}</span><span class="dt">${esc(fmtShort(k))}${k === t ? " · <b>heute</b>" : ""}</span>
+      <span class="st"><span>☀️${sym(sessStatus(k, "m"))}</span><span>🌙${sym(sessStatus(k, "a"))}</span></span></button>`;
+  }).join("");
+  return `<div class="top"><div class="brand">📅 Kalender</div><div class="today-label">18.11. – 3.12.</div></div>
+    <div class="card calcard">
+      <div class="cal-head">${["Mo","Di","Mi","Do","Fr","Sa","So"].map(x => `<div>${x}</div>`).join("")}</div>
+      <div class="cal">${cells}</div>
+      <div class="legend"><span><i class="pip done"></i>erledigt</span><span><i class="pip partial"></i>teilweise</span><span><i class="pip"></i>offen</span><span>links ☀️ · rechts 🌙</span></div>
+    </div>
+    <p class="muted small" style="margin:0 2px 10px">Tippe auf einen Tag, um ihn anzusehen oder nachträglich abzuhaken.</p>
+    <div class="card daylist">${rows}</div>`;
+}
+
+function statTiles(st) {
+  return `<div class="stats">
+    <div class="stat"><div class="e">💪</div><div class="v">${nf(st.tensionSec)}</div><div class="l">Sekunden Oberschenkel angespannt</div></div>
+    <div class="stat"><div class="e">🪜</div><div class="v">${nf(st.stairs)}</div><div class="l">Stufen gegangen (hoch &amp; runter)</div></div>
+    <div class="stat"><div class="e">🦶</div><div class="v">${nf(st.toes)}</div><div class="l">Mal auf die Zehenspitzen</div></div>
+    <div class="stat"><div class="e">🦵</div><div class="v">${nf(st.bends)}</div><div class="l">Kniebeugungen</div></div>
+    <div class="stat"><div class="e">🚶</div><div class="v">${nf(st.walks)}</div><div class="l">${st.walks === 1 ? "Runde" : "Runden"} ums Haus</div></div>
+    <div class="stat"><div class="e">🔥</div><div class="v">${st.best}</div><div class="l">längste Serie (volle Tage)</div></div>
+    <div class="stat wide"><div class="v">${nf(st.reps)} <span class="small muted" style="font-weight:600">Wiederholungen insgesamt</span></div><div class="l">${st.sessions} von ${TOTAL_SESSIONS} Einheiten · ${st.fullDays} volle Tage</div></div>
+  </div>`;
+}
+
+function renderErfolge() {
+  const st = computeStats();
+  const badges = BADGES.map(b => {
+    const got = S.badges[b.id];
+    return `<div class="badge ${got ? "" : "locked"}"><div class="bi">${b.icon}</div><div class="bt">${esc(b.title)}</div><div class="bd">${esc(b.desc)}</div>
+      ${got ? `<div class="bdate">✓ ${esc(fmtDate(got, { day:"numeric", month:"short" }))}</div>` : `<div class="bd">🔒 noch offen</div>`}</div>`;
+  }).join("");
+  return `<div class="top"><div class="brand">🏅 Erfolge</div><div class="today-label">${Object.keys(S.badges).length}/${BADGES.length} Abzeichen</div></div>
+    <div class="section-title" style="margin-top:4px">Dein gesammelter Aufwand</div>
+    ${statTiles(st)}
+    <div class="section-title">Abzeichen</div>
+    <div class="badges">${badges}</div>`;
+}
+
+function renderFinale() {
+  const t = todayKey(), st = computeStats(), isOpDay = t === OP;
+  const pct = Math.round(st.sessions / TOTAL_SESSIONS * 100);
+  let praise;
+  if (pct === 100) praise = "Alle 32 Einheiten. Lückenlos. Besser kann man sich nicht vorbereiten.";
+  else if (pct >= 75) praise = `${st.sessions} von 32 Einheiten – das ist eine richtig starke Vorbereitung.`;
+  else if (pct >= 40) praise = `${st.sessions} von 32 Einheiten – jede einzelne davon hat deinem Knie geholfen.`;
+  else praise = `${st.sessions} von 32 Einheiten – und jede einzelne zählt. Nach der OP geht's weiter, Schritt für Schritt.`;
+  return `<section class="card finale">
+      <div class="fe">${isOpDay ? "💚" : "🌤️"}</div>
+      <h1>${isOpDay ? "Heute ist dein OP-Tag" : "Die OP liegt hinter dir"}</h1>
+      <p>${isOpDay ? "Du hast dich 16 Tage lang vorbereitet. Jetzt darfst du dich zurücklehnen – heute arbeiten die anderen für dich." : "Du hast dich gut vorbereitet. Jetzt heisst es: erholen, Geduld haben und Schritt für Schritt zurück."}</p>
+      <p class="muted">${praise}</p>
+    </section>
+    <div class="section-title">Deine Leistung</div>
+    <div class="card"><div class="bar" style="background:var(--card2)"><i style="width:${pct}%;background:var(--green)"></i></div>
+      <div class="hero-meta" style="opacity:1"><span><b>${st.sessions}</b>/32 Einheiten · <b>${st.fullDays}</b> volle Tage</span><span><b>${pct} %</b></span></div></div>
+    ${statTiles(st)}
+    <div class="wish">${isOpDay
+      ? "🍀 Alles Gute für die OP! Ruhige Hände fürs OP-Team, einen sanften Schlaf in der Narkose und ein gutes Aufwachen. Deine Oberschenkel sind bereit – du auch."
+      : "🍀 Gute Besserung! Hör jetzt auf dein Reha-Team. Die Kraft, die du in den letzten Wochen aufgebaut hast, nimmst du mit."}</div>
+    <div class="center" style="margin-top:14px"><button class="linkbtn" data-act="nav" data-v="erfolge">Abzeichen ansehen</button> · <button class="linkbtn" data-act="nav" data-v="kalender">Kalender ansehen</button></div>`;
+}
+
+function isStandalone() { return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; }
+const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+function renderSettings() {
+  const s = S.settings;
+  const sw = (key, label, hint) => `<div class="row"><label for="set-${key}">${label}${hint ? `<span class="hint">${hint}</span>` : ""}</label>
+    <span class="switch"><input type="checkbox" id="set-${key}" data-set="${key}" ${s[key] ? "checked" : ""}><i></i></span></div>`;
+  return `<div class="top"><div class="brand">⚙️ Einstellungen</div><div class="today-label">v${APP_VERSION}</div></div>
+  <div class="card">
+    ${sw("sound", "Ton", "Signal am Ende jeder Anspann-Phase. iPhone: Stumm-Schalter muss aus sein.")}
+    ${sw("vibrate", "Vibration", navigator.vibrate ? "Kurzes Vibrieren am Ende der 10 Sekunden." : "Wird von diesem Browser nicht unterstützt (z. B. iPhone).")}
+    ${sw("auto", "Timer läuft automatisch weiter", "Nach der Pause startet die nächste Wiederholung von selbst.")}
+    <div class="row"><label for="set-pause">Pause zwischen Wiederholungen</label>
+      <select id="set-pause" data-set="pause">${[3, 5, 8, 10].map(n => `<option value="${n}" ${+s.pause === n ? "selected" : ""}>${n} Sek.</option>`).join("")}</select></div>
+    <div class="row"><label for="set-theme">Darstellung</label>
+      <select id="set-theme" data-set="theme"><option value="auto" ${s.theme === "auto" ? "selected" : ""}>Automatisch</option><option value="light" ${s.theme === "light" ? "selected" : ""}>Hell</option><option value="dark" ${s.theme === "dark" ? "selected" : ""}>Dunkel</option></select></div>
+  </div>
+
+  <div class="section-title">⏰ Erinnerungen</div>
+  <div class="card prose">
+    <p>Ehrlich gesagt: Eine Web-App kann ohne eigenen Server <b>keine zuverlässigen Erinnerungen</b> zu festen Uhrzeiten schicken – auf dem iPhone gar nicht, auf Android nur unzuverlässig. Deshalb gibt's hier die robuste Lösung: Erinnerungen als Termine in deinem Handy-Kalender. Die klingeln garantiert.</p>
+    <div class="row"><label for="set-remM">☀️ Morgen-Erinnerung</label><input type="time" id="set-remM" data-set="remM" value="${esc(s.remM)}"></div>
+    <div class="row"><label for="set-remA">🌙 Abend-Erinnerung</label><input type="time" id="set-remA" data-set="remA" value="${esc(s.remA)}"></div>
+    <button class="btn btn-sec btn-wide" data-act="ics">📆 Erinnerungen in den Kalender übernehmen</button>
+    <p class="small muted" style="margin-top:10px">Erstellt 32 Termine (18.11.–3.12.) mit Alarm plus den OP-Termin. iPhone: am besten in Safari öffnen (nicht über das Home-Bildschirm-Symbol), dann «Alle hinzufügen» tippen. Alternative: zwei tägliche Wecker oder die App «Erinnerungen» mit «Täglich wiederholen».</p>
+  </div>
+
+  <div class="section-title">📲 App installieren</div>
+  <div class="card prose">
+    ${isStandalone() ? `<p>✅ Die App ist installiert und läuft vom Home-Bildschirm. Sie funktioniert auch offline.</p>` :
+      installEvt ? `<p>Installiere die App, damit sie offline läuft und wie eine normale App startet.</p><button class="btn btn-pri btn-wide" data-act="install" style="font-size:18px">Jetzt installieren</button>` : installSteps()}
+  </div>
+
+  <div class="section-title">💾 Daten</div>
+  <div class="card">
+    <p class="small muted" style="margin-top:0">Dein Fortschritt bleibt nur auf diesem Gerät gespeichert. Mit einer Sicherung kannst du ihn auf ein anderes Gerät mitnehmen.</p>
+    <button class="btn btn-sec btn-wide" data-act="export">⬇️ Sicherung herunterladen</button>
+    <button class="btn btn-sec btn-wide" data-act="import">⬆️ Sicherung laden</button>
+    <input type="file" id="importfile" accept="application/json,.json" class="hidden">
+    <button class="btn btn-danger btn-wide" data-act="reset">🗑️ Fortschritt zurücksetzen</button>
+  </div>
+  <p class="small muted center" style="margin:16px 8px">Diese App ersetzt keine ärztliche oder physiotherapeutische Beratung. Bei Schmerzen oder Unsicherheit: Übung abbrechen und deine Physio fragen.</p>`;
+}
+function installSteps() {
+  if (isIOS()) return `<ol><li>Öffne diese Seite in <b>Safari</b>.</li><li>Tippe unten auf <b>Teilen</b> (Quadrat mit Pfeil nach oben ⬆️).</li><li>Wähle <b>«Zum Home-Bildschirm»</b> und dann <b>«Hinzufügen»</b>.</li></ol><p class="small muted">Wichtig: Der Fortschritt in Safari und in der installierten App wird getrennt gespeichert. Installiere die App also am besten gleich zu Beginn.</p>`;
+  return `<ol><li>Öffne diese Seite in <b>Chrome</b>.</li><li>Tippe oben rechts auf <b>⋮</b> (drei Punkte).</li><li>Wähle <b>«App installieren»</b> oder <b>«Zum Startbildschirm hinzufügen»</b>.</li></ol>`;
+}
+
+/* ===================== Aktionen ===================== */
+function changeCount(k, s, i, delta) {
+  if (!inRange(k) || diffDays(todayKey(), k) > 0) return;
+  const before = sessComplete(k, s), beforeDay = dayComplete(k);
+  const arr = getSess(k, s), ex = EXERCISES[i];
+  arr[i] = Math.max(0, Math.min(ex.target, arr[i] + delta));
+  if (delta > 0) popIdx = i;
+  save();
+  afterChange(k, s, before, beforeDay);
+}
+function afterChange(k, s, before, beforeDay) {
+  const nowDone = sessComplete(k, s);
+  const fresh = checkBadges(); save();
+  render();
+  if (!before && nowDone) celebrate(k, s, !beforeDay && dayComplete(k), fresh);
+  else if (fresh.length) { confetti(60); sndEnd(); toast(fresh.map(b => `${b.icon} Neues Abzeichen: ${b.title}`).join(" · ")); }
+}
+
+function celebrate(k, s, dayFull, fresh) {
+  sndDone(); buzz([60, 60, 120]);
+  confetti(dayFull ? 220 : 140);
+  const st = computeStats();
+  const left = TOTAL_SESSIONS - st.sessions;
+  const sub = dayFull ? "Beide Einheiten erledigt – Tag komplett! 🌟" : `${SESSIONS[s].label}-Einheit erledigt.`;
+  const html = `<div class="big-emo">${dayFull ? "🌟" : "🎉"}</div>
+    <h2 class="center">Geschafft!</h2>
+    <p class="center muted" style="margin:0">${sub}</p>
+    <p class="quote">«${esc(nextQuote())}»</p>
+    <p class="center muted small">${left > 0 ? `Noch ${left} ${left === 1 ? "Einheit" : "Einheiten"} bis 100 %.` : "Alle 32 Einheiten erledigt! 🏆"}${st.current >= 2 ? ` · 🔥 ${st.current} Tage in Folge` : ""}</p>
+    ${fresh.map(badgeLine).join("")}`;
+  save();
+  sheet(html, [{ label:"Weiter", cls:"btn-pri", act:"close" }]);
+}
+const badgeLine = b => `<div class="newbadge"><div class="bi">${b.icon}</div><div><b>Neues Abzeichen: ${esc(b.title)}</b><div class="small muted">${esc(b.desc)}</div></div></div>`;
+
+function sheet(html, buttons) {
+  $layer.innerHTML = `<div class="overlay" data-act="overlay"><div class="sheet" role="dialog" aria-modal="true">${html}
+    <div class="btns">${buttons.map((b, i) => `<button class="btn ${b.cls || "btn-sec"}" data-sheet="${i}">${b.label}</button>`).join("")}</div></div></div>`;
+  $layer._buttons = buttons;
+  const first = $layer.querySelector("[data-sheet]"); if (first) first.focus({ preventScroll: true });
+}
+function closeSheet() { $layer.innerHTML = ""; $layer._buttons = null; }
+
+let toastTimer = null;
+function toast(msg) {
+  document.querySelectorAll(".toast").forEach(t => t.remove());
+  const el = document.createElement("div"); el.className = "toast"; el.setAttribute("role", "status"); el.textContent = msg;
+  document.body.appendChild(el); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.remove(), 2800);
+}
+
+/* ===================== Timer ===================== */
+let T = null;
+function startTimer(k, s, i) {
+  audio(); keepAwake(true);
+  T = { k, s, i, phase:"ready", end: Date.now() + 3000, dur: 3000, iv: null };
+  const el = document.createElement("div"); el.className = "timer"; el.id = "timer";
+  el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true");
+  document.body.appendChild(el);
+  T.iv = setInterval(timerTick, 100);
+  timerDraw();
+}
+function timerTick() {
+  if (!T) return;
+  const now = Date.now();
+  if (T.phase === "wait") return;
+  if (now < T.end) { timerDraw(); return; }
+  const arr = getSess(T.k, T.s), ex = EXERCISES[T.i];
+  if (T.phase === "ready" || T.phase === "rest") {
+    if (T.phase === "rest" && !S.settings.auto) { T.phase = "wait"; timerDraw(); return; }
+    T.phase = "hold"; T.dur = HOLD_SECONDS * 1000; T.end = now + T.dur; sndStart(); buzz(40);
+  } else if (T.phase === "hold") {
+    const before = sessComplete(T.k, T.s), beforeDay = dayComplete(T.k);
+    arr[T.i] = Math.min(ex.target, arr[T.i] + 1); save();
+    sndEnd(); buzz([200, 100, 200]);
+    const el = document.getElementById("timer"); if (el) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+    if (arr[T.i] >= ex.target) { const t = T; stopTimer(); popIdx = t.i; afterChange(t.k, t.s, before, beforeDay); return; }
+    T.phase = "rest"; T.dur = (+S.settings.pause || 5) * 1000; T.end = now + T.dur;
+  }
+  timerDraw();
+}
+function timerDraw() {
+  const el = document.getElementById("timer"); if (!el || !T) return;
+  const ex = EXERCISES[T.i], v = peekSess(T.k, T.s)[T.i];
+  const left = Math.max(0, T.end - Date.now());
+  const secs = Math.ceil(left / 1000);
+  const frac = T.phase === "wait" ? 1 : left / T.dur;
+  const C = 2 * Math.PI * 90;
+  const labels = { ready:"Bereit machen …", hold:"Anspannen 💪", rest:"Entspannen 😌", wait:"Pause" };
+  const repNo = Math.min(ex.target, v + (T.phase === "rest" || T.phase === "wait" ? 0 : 1));
+  el.className = "timer " + (T.phase === "hold" ? "hold" : T.phase === "ready" ? "" : "rest") + (el.classList.contains("flash") ? " flash" : "");
+  const sig = T.phase + "|" + v;
+  if (el._sig !== sig) {
+    el._sig = sig;
+    el.innerHTML = `<div><div class="tt">${ex.emoji} ${esc(ex.title)}</div>
+      <div class="tr">${T.phase === "rest" || T.phase === "wait" ? `${v} von ${ex.target} geschafft` : `Wiederholung ${repNo} von ${ex.target}`}</div></div>
+      <div class="ring"><svg viewBox="0 0 200 200" aria-hidden="true"><circle class="bg" cx="100" cy="100" r="90"/><circle class="fg" cx="100" cy="100" r="90" stroke-dasharray="${C}" stroke-dashoffset="0"/></svg>
+        <div class="inner"><div class="num" aria-live="off">${T.phase === "wait" ? "⏸" : secs}</div><div class="ph">${labels[T.phase]}</div></div></div>
+      <div class="segs" aria-hidden="true">${Array.from({ length: ex.target }, (_, j) => `<i class="${j < v ? "on" : ""}"></i>`).join("")}</div>
+      <div class="tb">${T.phase === "wait" ? `<button class="btn btn-sec" data-t="stop">Beenden</button><button class="btn btn-pri" data-t="next" style="font-size:18px">Weiter ▶</button>`
+        : `<button class="btn btn-sec" data-t="stop">⏹ Stopp</button>`}</div>`;
+  }
+  const n = el.querySelector(".num"); if (n && T.phase !== "wait" && n.textContent !== String(secs)) n.textContent = secs;
+  const fg = el.querySelector(".fg"); if (fg) fg.setAttribute("stroke-dashoffset", String(C * (1 - frac)));
+}
+function stopTimer() {
+  if (!T) return;
+  clearInterval(T.iv); T = null; keepAwake(false);
+  const el = document.getElementById("timer"); if (el) el.remove();
+  render();
+}
+
+/* ===================== Konfetti ===================== */
+function confetti(count = 140) {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = document.getElementById("confetti"), ctx = cv.getContext("2d");
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cv.classList.remove("hidden");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const colors = ["#2e9e66", "#46c487", "#f0b34a", "#e86f5a", "#4a9fd8", "#9b7ad8", "#ffd84d"];
+  const P = Array.from({ length: count }, () => ({
+    x: innerWidth / 2 + (Math.random() - .5) * innerWidth * .3, y: innerHeight * .35,
+    vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4, r: Math.random() * Math.PI, vr: (Math.random() - .5) * .3,
+    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8, c: colors[Math.floor(Math.random() * colors.length)] }));
+  const t0 = performance.now();
+  (function frame(t) {
+    const el = t - t0; ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (const p of P) {
+      p.vy += .35; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.globalAlpha = Math.max(0, 1 - el / 3200);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r * 2))); ctx.restore();
+    }
+    if (el < 3200) requestAnimationFrame(frame); else { ctx.clearRect(0, 0, innerWidth, innerHeight); cv.classList.add("hidden"); }
+  })(t0);
+}
+
+/* ===================== Kalender-Datei (.ics) ===================== */
+function buildICS() {
+  const pad = n => String(n).padStart(2, "0");
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  const d0 = START.replace(/-/g, "");
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Knie-Kraft//Physio//DE", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+    "BEGIN:VTIMEZONE", "TZID:Europe/Zurich",
+    "BEGIN:DAYLIGHT", "TZOFFSETFROM:+0100", "TZOFFSETTO:+0200", "TZNAME:CEST", "DTSTART:19700329T020000", "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU", "END:DAYLIGHT",
+    "BEGIN:STANDARD", "TZOFFSETFROM:+0200", "TZOFFSETTO:+0100", "TZNAME:CET", "DTSTART:19701025T030000", "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU", "END:STANDARD",
+    "END:VTIMEZONE"];
+  const ev = (id, time, title, desc) => {
+    const [h, m] = (time || "08:00").split(":").map(Number);
+    const endMin = h * 60 + m + 20;
+    lines.push("BEGIN:VEVENT", `UID:kniekraft-${id}-${d0}@kniekraft.app`, `DTSTAMP:${stamp}`,
+      `DTSTART;TZID=Europe/Zurich:${d0}T${pad(h)}${pad(m)}00`,
+      `DTEND;TZID=Europe/Zurich:${d0}T${pad(Math.floor(endMin / 60) % 24)}${pad(endMin % 60)}00`,
+      `RRULE:FREQ=DAILY;COUNT=${NUM_DAYS}`, `SUMMARY:${title}`, `DESCRIPTION:${desc}`,
+      "BEGIN:VALARM", "ACTION:DISPLAY", `DESCRIPTION:${title}`, "TRIGGER:PT0M", "END:VALARM", "END:VEVENT");
+  };
+  ev("morgen", S.settings.remM, "☀️ Physio: Morgen-Einheit", "7 Übungen – danach in Knie-Kraft abhaken.");
+  ev("abend", S.settings.remA, "🌙 Physio: Abend-Einheit", "7 Übungen – danach in Knie-Kraft abhaken.");
+  const op = OP.replace(/-/g, ""), opEnd = addDays(OP, 1).replace(/-/g, "");
+  lines.push("BEGIN:VEVENT", `UID:kniekraft-op-${op}@kniekraft.app`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${op}`, `DTEND;VALUE=DATE:${opEnd}`,
+    "SUMMARY:💚 OP-Tag – alles Gute!", "TRANSP:TRANSPARENT", "END:VEVENT", "END:VCALENDAR");
+  return lines.join("\r\n") + "\r\n";
+}
+function downloadFile(name, text, type) {
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+function exportICS() {
+  const ics = buildICS();
+  if (isIOS()) { location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics); return; }
+  downloadFile("knie-kraft-erinnerungen.ics", ics, "text/calendar");
+  toast("Datei geladen – öffne sie, um die Termine hinzuzufügen.");
+}
+
+/* ===================== Events ===================== */
+document.addEventListener("click", e => {
+  const nav = e.target.closest("[data-nav]");
+  if (nav) { if (T) return; view = nav.dataset.nav; if (view === "heute") { selDate = null; selSess = null; } render(); scrollTo(0, 0); return; }
+
+  const tb = e.target.closest("[data-t]");
+  if (tb && T) {
+    if (tb.dataset.t === "stop") { stopTimer(); toast("Timer beendet – bisherige Wiederholungen sind gespeichert."); }
+    if (tb.dataset.t === "next") { audio(); T.phase = "hold"; T.dur = HOLD_SECONDS * 1000; T.end = Date.now() + T.dur; sndStart(); timerDraw(); }
+    return;
+  }
+
+  const sb = e.target.closest("[data-sheet]");
+  if (sb && $layer._buttons) { const b = $layer._buttons[+sb.dataset.sheet]; closeSheet(); if (b.fn) b.fn(); return; }
+  if (e.target.matches("[data-act=overlay]")) { closeSheet(); return; }
+
+  const a = e.target.closest("[data-act]"); if (!a) return;
+  const act = a.dataset.act;
+  const card = a.closest("[data-i]");
+  const k = selDate || todayKey();
+  persistOnce();
+  switch (act) {
+    case "inc": changeCount(k, selSess, +card.dataset.i, +1); break;
+    case "dec": changeCount(k, selSess, +card.dataset.i, -1); break;
+    case "toggle": { const i = +card.dataset.i; changeCount(k, selSess, i, peekSess(k, selSess)[i] >= 1 ? -1 : 1); break; }
+    case "timer": startTimer(k, selSess, +card.dataset.i); break;
+    case "sess": selSess = a.dataset.s; render(); break;
+    case "markall": {
+      const s = selSess;
+      sheet(`<h2>${SESSIONS[s].label}-Einheit abhaken?</h2><p class="muted">Alle 7 Übungen ${k === todayKey() ? "von heute" : "vom " + esc(fmtShort(k))} werden als erledigt markiert.</p>`,
+        [{ label:"Ja, alles erledigt", cls:"btn-pri", fn: () => {
+            const before = sessComplete(k, s), bd = dayComplete(k), arr = getSess(k, s);
+            EXERCISES.forEach((ex, i) => arr[i] = ex.target); save(); afterChange(k, s, before, bd); } },
+         { label:"Abbrechen", cls:"btn-sec" }]);
+      break;
+    }
+    case "day": {
+      const dk = a.dataset.k;
+      if (diffDays(todayKey(), dk) > 0) { toast("Dieser Tag kommt erst noch – Geduld 😉"); break; }
+      selDate = dk === todayKey() && diffDays(todayKey(), OP) > 0 ? null : dk;
+      selSess = defaultSess(dk); view = "heute"; render(); scrollTo(0, 0); break;
+    }
+    case "opday": toast("4. Dezember: OP-Tag – dein grosses Ziel 💚"); break;
+    case "back": selDate = null; selSess = null; view = diffDays(todayKey(), OP) <= 0 ? "kalender" : "heute"; render(); scrollTo(0, 0); break;
+    case "nav": view = a.dataset.v; render(); scrollTo(0, 0); break;
+    case "dismisshint": S.hintDismissed = true; save(); render(); break;
+    case "howinstall": e.preventDefault(); sheet(`<h2>📲 App installieren</h2><div class="prose">${installEvt ? "<p>Tippe auf «Jetzt installieren».</p>" : installSteps()}</div>`,
+      installEvt ? [{ label:"Jetzt installieren", cls:"btn-pri", fn: doInstall }, { label:"Später", cls:"btn-sec" }] : [{ label:"Alles klar", cls:"btn-pri" }]); break;
+    case "install": doInstall(); break;
+    case "ics": exportICS(); break;
+    case "export": downloadFile(`knie-kraft-sicherung-${todayKey()}.json`, JSON.stringify(S, null, 1), "application/json"); toast("Sicherung heruntergeladen."); break;
+    case "import": document.getElementById("importfile").click(); break;
+    case "reset":
+      sheet(`<div class="big-emo">⚠️</div><h2 class="center">Wirklich alles zurücksetzen?</h2><p class="center muted">Alle abgehakten Übungen, Serien und Abzeichen werden gelöscht. Das kann nicht rückgängig gemacht werden.</p>`,
+        [{ label:"Abbrechen", cls:"btn-sec" }, { label:"Ja, alles löschen", cls:"btn-danger", fn: () => {
+          const keep = S.settings; S = defaults(); S.settings = keep; save(); selDate = null; selSess = null; view = "heute"; render(); toast("Fortschritt zurückgesetzt."); } }]);
+      break;
+  }
+});
+document.addEventListener("change", e => {
+  const el = e.target;
+  if (el.id === "importfile" && el.files && el.files[0]) {
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const d = JSON.parse(r.result);
+        if (!d || d.v !== 1 || typeof d.days !== "object") throw new Error("bad");
+        sheet(`<h2>Sicherung laden?</h2><p class="muted">Der aktuelle Fortschritt auf diesem Gerät wird durch die Sicherung ersetzt.</p>`,
+          [{ label:"Ja, laden", cls:"btn-pri", fn: () => { S = sanitize(d); save(); applyTheme(); render(); toast("Sicherung geladen ✓"); } }, { label:"Abbrechen", cls:"btn-sec" }]);
+      } catch (err) { toast("Diese Datei ist keine gültige Knie-Kraft-Sicherung."); }
+    };
+    r.readAsText(el.files[0]); el.value = "";
+    return;
+  }
+  const key = el.dataset && el.dataset.set; if (!key) return;
+  S.settings[key] = el.type === "checkbox" ? el.checked : (key === "pause" ? +el.value : el.value);
+  save();
+  if (key === "theme") applyTheme();
+  if (key === "sound" && el.checked) { audio(); tone(880, .15); }
+  if (key === "vibrate" && el.checked) buzz(80);
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") { if ($layer.innerHTML) closeSheet(); else if (T) stopTimer(); } });
+
+let persisted = false;
+function persistOnce() { if (persisted) return; persisted = true; try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {} }
+
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; if (view === "einstellungen") render(); });
+window.addEventListener("appinstalled", () => { installEvt = null; S.hintDismissed = true; save(); render(); });
+async function doInstall() { if (!installEvt) return; installEvt.prompt(); try { await installEvt.userChoice; } catch (e) {} installEvt = null; render(); }
+
+/* ===================== Tageswechsel (Mitternacht) ===================== */
+function checkDayChange() {
+  const t = todayKey();
+  if (t === lastToday) return;
+  lastToday = t;
+  if (T) return; // laufenden Timer nicht stören – beim nächsten Check
+  if (!selDate) { selSess = null; }
+  if (view === "heute" || view === "kalender" || view === "erfolge") render();
+  if (inRange(t)) toast(`Neuer Tag: Tag ${dayIndex(t) + 1} von ${NUM_DAYS} 🌅`);
+  else if (t === OP) { toast("Heute ist OP-Tag 💚"); if (view === "heute" && !selDate) confetti(200); }
+}
+setInterval(checkDayChange, 15000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) { checkDayChange(); if (T) { timerDraw(); keepAwake(true); } } });
+window.addEventListener("focus", checkDayChange);
+window.addEventListener("pageshow", checkDayChange);
+window.addEventListener("storage", e => { if (e.key === STORE_KEY) { S = load(); render(); } });
+try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme); } catch (e) {}
+
+/* ===================== Start ===================== */
+applyTheme();
+render();
+try { if (todayKey() === OP && !sessionStorage.getItem("kk-op-shown")) { sessionStorage.setItem("kk-op-shown", "1"); setTimeout(() => confetti(220), 400); } } catch (e) {}
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>
