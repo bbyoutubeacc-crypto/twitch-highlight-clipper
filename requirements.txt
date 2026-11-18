@@ -1,0 +1,11 @@
+# Twitch Highlight Clipper – Python 3.11+
+gradio>=5.0,<7
+pandas>=2.0
+PyYAML>=6.0
+streamlink>=7.0
+faster-whisper>=1.0
+
+# Optional: YouTube-Upload (ohne diese Pakete funktioniert alles andere)
+google-api-python-client>=2.100
+google-auth-oauthlib>=1.0
+google-auth-httplib2>=0.2

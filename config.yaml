@@ -1,0 +1,193 @@
+# ============================================================
+#  Twitch Highlight Clipper – Konfiguration
+#  Alle Werte haben sinnvolle Standardwerte. Was hier fehlt,
+#  wird automatisch ergänzt. Zeiten immer in Sekunden.
+# ============================================================
+
+# Ausgabeordner für Clips (relativ zum Programmordner oder absolut)
+output_dir: "clips"
+
+# Sprache für Titel/Beschreibung der YouTube-Texte: "de" oder "en"
+text_language: "de"
+
+# ------------------------------------------------------------
+# Twitch-Chat (anonym, kein API-Key nötig)
+# ------------------------------------------------------------
+chat:
+  host: "irc.chat.twitch.tv"
+  port: 6697
+  use_ssl: true
+  # Max. Wartezeit zwischen Verbindungsversuchen (exponentielles Backoff)
+  reconnect_max_delay: 60
+  # Ohne Daten nach so vielen Sekunden: PING senden / Verbindung neu aufbauen
+  idle_timeout: 300
+
+# ------------------------------------------------------------
+# Aufnahme (streamlink -> ffmpeg -> Ringpuffer)
+# ------------------------------------------------------------
+recording:
+  quality: "best"              # z. B. "best", "720p60", "720p", "480p"
+  segment_seconds: 10          # Länge eines Puffer-Segments
+  buffer_seconds: 120          # so viele Sekunden bleiben im Puffer
+  temp_dir: "buffer"           # Ordner für den Ringpuffer
+  # Der Chat reagiert erst einige Sekunden NACH dem eigentlichen Moment
+  # (Stream-Delay beim Zuschauer + Reaktionszeit). Um diesen Wert wird
+  # der erkannte Moment in der Aufnahme nach vorne verschoben.
+  stream_delay_seconds: 6
+  # Wartezeit bevor ein offline-Stream erneut geprüft wird
+  offline_retry_seconds: 30
+  # Pfade (leer = automatisch suchen)
+  ffmpeg_path: ""
+  streamlink_path: ""          # leer = "python -m streamlink" aus der venv
+  # Zusätzliche streamlink-Parameter, z. B. ["--twitch-low-latency"]
+  streamlink_args: []
+
+# ------------------------------------------------------------
+# Highlight-Erkennung
+# ------------------------------------------------------------
+detection:
+  # Highlight, wenn Score >= threshold (Score ~ "x-fach über Normal")
+  threshold: 3.0
+  # Kurzes Fenster für die aktuelle Aktivität
+  window_seconds: 5
+  # Langes Fenster für den Normalwert (gleitender Durchschnitt)
+  baseline_seconds: 180
+  # Erst nach so vielen Sekunden Chat-Beobachtung wird ausgelöst
+  warmup_seconds: 60
+  # Untergrenze für den Normalwert in Nachrichten/s (verhindert, dass bei
+  # sehr ruhigen Kanälen 3 Nachrichten schon ein Highlight sind)
+  min_baseline_rate: 0.3
+  # Mindestanzahl gezählter Nachrichten im kurzen Fenster
+  min_messages: 6
+  # Nach einem Highlight so lange nichts Neues auslösen
+  cooldown_seconds: 60
+  # Wie stark Hype-Begriffe den Score erhöhen (0 = gar nicht).
+  # Score = Aktivität * (1 + hype_multiplier * Hype-Anteil)
+  hype_multiplier: 0.6
+
+  # Spam-Schutz: identische Nachricht desselben Users innerhalb dieses
+  # Zeitraums nur einmal zählen
+  spam_window_seconds: 30
+  # Max. gezählte Nachrichten pro User im kurzen Fenster
+  max_messages_per_user: 3
+
+  # Diese Accounts werden ignoriert (Groß-/Kleinschreibung egal)
+  ignored_users:
+    - nightbot
+    - streamelements
+    - streamlabs
+    - moobot
+    - fossabot
+    - wizebot
+    - sery_bot
+    - soundalerts
+    - kofistreambot
+    - botrixoficial
+    - commanderroot
+
+  # Hype-Begriffe und Emotes mit Gewicht (1.0 = normal).
+  # Einzelne Wörter werden als ganzes Wort gesucht, Begriffe mit
+  # Leerzeichen als Teilstring. Groß-/Kleinschreibung egal.
+  hype_terms:
+    KEKW: 1.0
+    LUL: 1.0
+    LULW: 1.0
+    OMEGALUL: 1.2
+    ICANT: 1.0
+    POG: 1.0
+    POGGERS: 1.0
+    PogChamp: 1.0
+    PogU: 1.0
+    Pog: 1.0
+    W: 0.6
+    WW: 0.6
+    WWW: 0.8
+    L: 0.4
+    "LETS GO": 1.0
+    LETSGO: 1.0
+    "LET'S GO": 1.0
+    monkaS: 0.8
+    monkaW: 0.8
+    Kappa: 0.4
+    "5Head": 0.5
+    Clap: 0.6
+    EZ: 0.6
+    "?": 0.3
+    "???": 0.6
+    WTF: 0.8
+    "NO WAY": 1.0
+    "OMG": 0.8
+    "HAHA": 0.6
+    "xD": 0.5
+    "clip": 1.5
+    "!clip": 2.0
+    "clip it": 2.0
+    "clip that": 2.0
+
+  # Gewichtung der einzelnen Signale (später z. B. "audio": 1.0)
+  signal_weights:
+    chat: 1.0
+
+# ------------------------------------------------------------
+# Clips
+# ------------------------------------------------------------
+clips:
+  pre_seconds: 30              # Sekunden vor dem Moment
+  post_seconds: 15             # Sekunden nach dem Moment
+  # "16:9", "9:16" oder "both"
+  format: "16:9"
+  # Kodierung (libx264). "veryfast" = schnell, "medium" = kleinere Datei
+  video_preset: "veryfast"
+  crf: 20
+  audio_bitrate: "160k"
+  # Wie viele Chat-Nachrichten/Emotes pro Clip gespeichert werden
+  top_messages: 15
+
+# ------------------------------------------------------------
+# Untertitel (faster-whisper, läuft lokal)
+# ------------------------------------------------------------
+subtitles:
+  enabled: true
+  # tiny, base, small, medium, large-v3 (größer = besser, aber langsamer)
+  model: "small"
+  device: "auto"               # "auto", "cpu" oder "cuda"
+  compute_type: "auto"         # "auto", "int8", "float16", ...
+  language: ""                 # leer = automatisch erkennen ("de", "en", ...)
+  font: "Arial"
+  # Schriftgröße in Pixel relativ zur Videohöhe 1080
+  font_size_landscape: 54
+  font_size_shorts: 80
+  outline: 4
+  max_chars_per_line_landscape: 42
+  max_chars_per_line_shorts: 22
+
+# ------------------------------------------------------------
+# YouTube
+# ------------------------------------------------------------
+youtube:
+  # Upload aktivieren (benötigt client_secret.json, siehe README)
+  upload_enabled: false
+  # Nach jedem Clip automatisch hochladen (sonst per Button in der UI)
+  auto_upload: false
+  client_secrets_file: "client_secret.json"
+  token_file: "youtube_token.json"
+  privacy_status: "private"
+  category_id: "20"            # 20 = Gaming
+  extra_tags:
+    - twitch
+    - highlights
+    - stream highlights
+
+# ------------------------------------------------------------
+# Weboberfläche & Logging
+# ------------------------------------------------------------
+ui:
+  host: "127.0.0.1"
+  port: 7860
+  chart_seconds: 180           # Zeitraum des Live-Diagramms
+
+logging:
+  level: "INFO"
+  file: "logs/clipper.log"
+  # Im Testmodus Chat zusätzlich als JSONL speichern (für --replay)
+  save_chat_in_test_mode: true
